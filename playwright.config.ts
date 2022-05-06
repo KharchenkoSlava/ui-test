@@ -4,9 +4,9 @@ import { devices } from '@playwright/test';
 const config: PlaywrightTestConfig = {
   globalSetup: require.resolve('./global-setup'),
   testDir: './tests',
-  timeout: 30 * 1000,
+  timeout: 60 * 1000,
   expect: {
-    timeout: 5000
+    timeout: 15000
   },
   forbidOnly: false,
   retries: 0,
@@ -17,6 +17,9 @@ const config: PlaywrightTestConfig = {
     baseURL: 'https://app.stage.lokalise.cloud',
     trace: 'on-first-retry',
     storageState: 'state.json',
+    ignoreHTTPSErrors: true,
+    video: 'on-first-retry',
+    headless: false,
   },
 
   /* Configure projects for major browsers */
@@ -27,19 +30,19 @@ const config: PlaywrightTestConfig = {
         ...devices['Desktop Chrome'],
       },
     },
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-      },
-    },
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //   },
+    // },
 
-    {
-      name: 'webkit',
-      use: {
-        ...devices['Desktop Safari'],
-      },
-    },
+    // {
+    //   name: 'webkit',
+    //   use: {
+    //     ...devices['Desktop Safari'],
+    //   },
+    // },
   ],
   outputDir: 'test-results/',
 };
