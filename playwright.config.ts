@@ -18,7 +18,6 @@ const config: PlaywrightTestConfig = {
     trace: 'on-first-retry',
     storageState: 'state.json',
     ignoreHTTPSErrors: true,
-    video: 'on-first-retry',
     headless: false,
   },
 

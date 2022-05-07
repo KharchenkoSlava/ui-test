@@ -10,6 +10,7 @@ export default class ProjectsPage {
     targetLanguage: Locator;
     submitButton: Locator;
     projects: Locator;
+    projectsLink: Locator;
     selectTargetLanguage: (text?: string) => Locator;
     projectLinkByName: (projectName?: string) => Locator;;
     createProjectBlock: CreateProjectBlock;
@@ -20,6 +21,7 @@ export default class ProjectsPage {
     this.newProjectLink = page.locator('button:has-text("New project")');
     this.projects = page.locator('div[data-name="project-container"]');
     this.projectLinkByName = (projectName: string) => page.locator(`[data-name="project-sidebar"]  a:has-text("${projectName}")`);
+    this.projectsLink = page.locator('[data-name="project-sidebar"] > div > a');
     this.createProjectBlock = new CreateProjectBlock(this.page);
   }
 
@@ -42,6 +44,16 @@ export default class ProjectsPage {
   }
 
   async checkAmountOfProjects(count: number) {
-    await expect(this.projects).toHaveCount(count);
+    await expect(this.projects, 'Wrong projects amount').toHaveCount(count);
+  }
+
+  async getProjectsName() {
+    let projectsName = [];
+    const count = await this.projectsLink.count();
+    for (let i = 0; i < count; i++) {
+      const name = await this.projectsLink.nth(i).textContent();
+      projectsName.push(name);
+    }
+    return projectsName;
   }
 }

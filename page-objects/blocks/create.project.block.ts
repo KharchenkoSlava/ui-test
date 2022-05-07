@@ -1,11 +1,11 @@
 import { Locator, Page } from '@playwright/test';
 
 export default class CreateProjectBlock {
-  readonly page: Page 
-    projectName: Locator;
-    targetLanguage: Locator;
-    selectTargetLanguage: (text?: string) => Locator;
-    submitButton: Locator;
+  private readonly page: Page 
+  private readonly  projectName: Locator;
+  private readonly  targetLanguage: Locator;
+  private readonly  selectTargetLanguage: (text?: string) => Locator;
+  private readonly  submitButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
