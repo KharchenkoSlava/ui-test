@@ -2,10 +2,10 @@ import { Locator, Page } from '@playwright/test';
 
 export default class CreateProjectBlock {
   private readonly page: Page 
-  private readonly  projectName: Locator;
-  private readonly  targetLanguage: Locator;
-  private readonly  selectTargetLanguage: (text?: string) => Locator;
-  private readonly  submitButton: Locator;
+  private readonly projectName: Locator;
+  private readonly targetLanguage: Locator;
+  private readonly selectTargetLanguage: (text?: string) => Locator;
+  private readonly submitButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -15,12 +15,12 @@ export default class CreateProjectBlock {
     this.submitButton = page.locator('#tabs--1--panel--0 button:has-text("Proceed")');
   }
 
-  async createProject(name: string) {
+  async createProject(name: string, searchLang = 'uk', chooseLang = 'Ukrainian (uk)') {
     await this.projectName.fill(name);
     
     // search and choose target language
-    await this.targetLanguage.fill('uk');
-    await this.selectTargetLanguage().click();
+    await this.targetLanguage.fill(searchLang);
+    await this.selectTargetLanguage(chooseLang).click();
 
     await this.submitButton.click();
     await this.page.waitForNavigation({ url: /\/project\// });

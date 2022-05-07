@@ -4,13 +4,17 @@ import NavigationBlock from './mixin-block/navigation.block';
 import CreateKeyBlock from './blocks/create.key.block';
 
 export default class ProjectPage {
-  readonly page: Page 
-  navigationBlock: NavigationBlock;
-  createKeyBlock: CreateKeyBlock;
-  keysList: Locator;
-  keysName: Locator;
-  spinnerLogo: Locator;
-  keyName: (text: string) => Locator;
+  private readonly page: Page 
+  private readonly navigationBlock: NavigationBlock;
+  private readonly createKeyBlock: CreateKeyBlock;
+  private readonly keysList: Locator;
+  private readonly keysName: Locator;
+  private readonly spinnerLogo: Locator;
+  private readonly keyName: (text: string) => Locator;
+  private readonly translationSpan: (text: string) => Locator;
+  private readonly translationPluralSpan: (text: string) => Locator;
+  private readonly translationTextarea: Locator;
+  private readonly translationSaveButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -19,21 +23,18 @@ export default class ProjectPage {
     this.keysList = this.page.locator('[id^="keyrowhead-"]');
     this.keysName = this.keysList.locator('a.edit-key');
     this.keyName = (text: string) => this.keysList.locator('a', { hasText: text });
-    this.spinnerLogo = this.page.locator('#spinner-endless');
+    this.translationSpan = (translationId: string) => this.page.locator(`#transcell-${translationId} span`);
+    this.translationPluralSpan = (translationId: string) => this.page.locator(`#transcell-${translationId} span.lokalise-popup-wrapper`);
+    this.translationTextarea = this.page.locator('.lokalise-editor-wrapper textarea');
+    this.translationSaveButton = this.page.locator('.lokalise-editor-wrapper button.editor-icon-button.save');
   }
 
   async goto(id: string) {
     await this.page.goto(`${config.use.baseURL}/project/${id}/?view=multi`);
   }
 
-  async waitLoader() {
-    await this.spinnerLogo.waitFor({ state: 'visible' });
-    await this.spinnerLogo.waitFor({ state: 'hidden' });
-  }  
-
   async createKeyAndWaitKey(name: string) {
     await this.createKeyBlock.createKey(name);
-    await this.waitLoader();
     await this.keyName(name).waitFor({ state: 'visible' });
   }
 
@@ -45,5 +46,32 @@ export default class ProjectPage {
       keys.push(name);
     }
     return keys;
+  }
+
+  async setPlainTransaltion(translationId: string, translation: string) {
+    await this.translationSpan(translationId).click();
+    await this.translationTextarea.fill(translation);
+    await this.translationSaveButton.click();
+  }
+
+  async getPlainTransaltion(translationId: string) {
+    return await this.translationSpan(translationId).innerHTML();
+  }
+
+  async setAllPluralTransaltion(translationId: string, translations: Array<string>) {
+    for (let i = 0; i < translations.length; i++) {
+      await this.translationPluralSpan(translationId).nth(i).click();
+      await this.translationTextarea.fill(translations[i]);
+      await this.translationSaveButton.click();
+    }
+  }
+
+  async getPlainPluralTransaltion(translationId: string, translations: Array<string>) {
+    let translationList = [];
+    for (let i = 0; i < translations.length; i++) {
+      const translation = await this.translationPluralSpan(translationId).locator('span').nth(i).innerHTML();
+      translationList.push(translation);
+    }
+    return translationList;
   }
 }

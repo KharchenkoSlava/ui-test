@@ -3,17 +3,17 @@ import config from '../playwright.config';
 import CreateProjectBlock from './blocks/create.project.block';
 
 export default class ProjectsPage {
-  readonly page: Page 
-    newProjectLink: Locator;
-    getStartedLink: Locator;
-    projectName: Locator;
-    targetLanguage: Locator;
-    submitButton: Locator;
-    projects: Locator;
-    projectsLink: Locator;
-    selectTargetLanguage: (text?: string) => Locator;
-    projectLinkByName: (projectName?: string) => Locator;;
-    createProjectBlock: CreateProjectBlock;
+  private readonly page: Page 
+  private readonly newProjectLink: Locator;
+  private readonly getStartedLink: Locator;
+  private readonly projectName: Locator;
+  private readonly targetLanguage: Locator;
+  private readonly submitButton: Locator;
+  private readonly projects: Locator;
+  private readonly projectsLink: Locator;
+  private readonly selectTargetLanguage: (text?: string) => Locator;
+  private readonly projectLinkByName: (projectName?: string) => Locator;;
+  private readonly createProjectBlock: CreateProjectBlock;
 
   constructor(page: Page) {
     this.page = page;

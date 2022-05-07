@@ -1,8 +1,8 @@
 import { Locator, Page } from '@playwright/test';
 
 export default class NavigationBlock {
-  readonly page: Page 
-    projectsLink: Locator;
+  private readonly page: Page 
+  private readonly projectsLink: Locator;
 
   constructor(page: Page) {
     this.page = page;

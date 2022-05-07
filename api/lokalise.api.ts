@@ -2,6 +2,9 @@ import config from '../playwright.config';
 import superAgent from 'superagent';
 import { faker } from '@faker-js/faker';
 
+export type ICreateKey = { key_name?: string, platforms?: Array<string>, is_plural?: boolean };
+export type ICreateProject = { name?: string };
+
 export default class LokaliseApi {
   private token: string;
   baseURL: string;
@@ -46,7 +49,7 @@ export default class LokaliseApi {
       );
   }
 
-  async createProject(data: { name?: string } = {}) {
+  async createProject(data: ICreateProject = {}) {
     const {
       name = faker.random.alpha(10),
     } = data;
@@ -59,6 +62,30 @@ export default class LokaliseApi {
       .then(
         (result) => {
           console.log(`Create projects: ${JSON.stringify(result)}`);
+          return result;
+        },
+        (error) => {
+          console.warn(JSON.stringify(error));
+          return error;
+        },
+      );
+  }
+
+  async createKey(projectId: string, data: ICreateKey = {}) {
+    const {
+      key_name = faker.random.alpha(10),
+      platforms = ['web'],
+      is_plural = false
+    } = data;
+    return superAgent
+      .post(`${this.baseURL}/api2/projects/${projectId}/keys`)
+      .timeout({ deadline: 30000 })
+      .set('Content-Type', 'application/json')
+      .set('x-api-token', this.token)
+      .send({ keys: [{ key_name, platforms, is_plural }]})
+      .then(
+        (result) => {
+          console.log(`Create key: ${JSON.stringify(result)}`);
           return result;
         },
         (error) => {

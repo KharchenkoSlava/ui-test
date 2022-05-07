@@ -17,14 +17,14 @@ export default class CreateKeyBlock {
     this.submitButton = this.page.locator('#btn_addkey');
   }
 
-  async createKey(name: string) {
+  async createKey(name: string, device = 'Web') {
     await this.addKeyLink.click();
     
     await this.keyNameInput.fill(name);
 
     // search and choose device
     await this.deviceDropDown.click();
-    await this.deviceOption('Web').click();
+    await this.deviceOption(device).click();
 
     await this.submitButton.click();
     this.page.waitForLoadState()
