@@ -5,11 +5,10 @@ import CreateKeyBlock from './blocks/create.key.block';
 
 export default class ProjectPage {
   private readonly page: Page 
-  private readonly navigationBlock: NavigationBlock;
+  readonly navigationBlock: NavigationBlock;
   private readonly createKeyBlock: CreateKeyBlock;
   private readonly keysList: Locator;
   private readonly keysName: Locator;
-  private readonly spinnerLogo: Locator;
   private readonly keyName: (text: string) => Locator;
   private readonly translationSpan: (text: string) => Locator;
   private readonly translationPluralSpan: (text: string) => Locator;
@@ -36,6 +35,15 @@ export default class ProjectPage {
   async createKeyAndWaitKey(name: string) {
     await this.createKeyBlock.createKey(name);
     await this.keyName(name).waitFor({ state: 'visible' });
+  }
+
+  async waitForKeyIsVisible(name: string) {
+    try {
+      await this.keyName(name).waitFor({ state: 'visible', timeout: 3000 });
+    } catch(e) {
+      await this.page.reload();
+      await this.keyName(name).waitFor({ state: 'visible' });
+    }
   }
 
   async getAllKeysName() {

@@ -27,6 +27,5 @@ export default class CreateKeyBlock {
     await this.deviceOption(device).click();
 
     await this.submitButton.click();
-    this.page.waitForLoadState()
   }
 }

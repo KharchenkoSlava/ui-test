@@ -6,14 +6,10 @@ export default class ProjectsPage {
   private readonly page: Page 
   private readonly newProjectLink: Locator;
   private readonly getStartedLink: Locator;
-  private readonly projectName: Locator;
-  private readonly targetLanguage: Locator;
-  private readonly submitButton: Locator;
   private readonly projects: Locator;
   private readonly projectsLink: Locator;
-  private readonly selectTargetLanguage: (text?: string) => Locator;
   private readonly projectLinkByName: (projectName?: string) => Locator;;
-  private readonly createProjectBlock: CreateProjectBlock;
+  readonly createProjectBlock: CreateProjectBlock;
 
   constructor(page: Page) {
     this.page = page;

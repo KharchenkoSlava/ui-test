@@ -14,6 +14,12 @@ class LokaliseHelper {
     return ids;
   }
 
+  async getProjectById(projectId: string) {
+    const { body, status } = await this.lokaliseApi.getProject(projectId);
+    expect(status, 'Wrong status code').toEqual(200);
+    return body;
+  }
+
   async deleteAllProjects() {
     const ids = await this.getProjectIds();
     const promises = ids.map((id: string) => this.lokaliseApi.deleteProject(id));
@@ -26,9 +32,18 @@ class LokaliseHelper {
     return body;
   }
 
-  async createKey(projectId: string, data: ICreateKey = {}) {
+  async createKey(projectId: string, data: ICreateKey = {}, keyTotal = 1) {
     const { body, status } = await this.lokaliseApi.createKey(projectId, data);
     expect(status, 'Wrong status code').toEqual(200);
+    
+    expect.poll(async () => {
+      const projectResponse = await this.getProjectById(projectId);
+      return projectResponse.statistics.keys_total;
+    }, {
+      message: 'Wait until the project has the key', 
+      timeout: 8000,
+    }).toEqual(keyTotal);
+
     return body;
   }
 }

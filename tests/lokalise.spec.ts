@@ -8,8 +8,7 @@ test.describe('Lokalise', () => {
   let translation: string;
   let otherTranslation: string;
 
-  test.beforeEach(async () => {
-    await lokaliseHelper.deleteAllProjects();
+  test.beforeEach(() => {
     projectName = faker.random.alpha(10);
     keyName = faker.random.alpha(10);
     translation = faker.random.alpha(10);
@@ -26,8 +25,8 @@ test.describe('Lokalise', () => {
 
     // Assert
     await projectPage.navigationBlock.gotoProjects();
-    await projectsPage.checkAmountOfProjects(1);
     await projectsPage.isVisibleProjectLinkByName(projectName);
+    await projectsPage.checkAmountOfProjects(1);
   });
 
   test('add nth project', async ({ projectPage, projectsPage }) => {
@@ -41,8 +40,8 @@ test.describe('Lokalise', () => {
     
     // Assert
     await projectPage.navigationBlock.gotoProjects();
-    await projectsPage.checkAmountOfProjects(2);
     await projectsPage.isVisibleProjectLinkByName(projectName);
+    await projectsPage.checkAmountOfProjects(2);
     
     const lastProjectName = await (await projectsPage.getProjectsName()).pop();
     expect(lastProjectName, 'Last created project must be in the end of the list').toEqual(lastProjectName);
@@ -66,9 +65,9 @@ test.describe('Lokalise', () => {
     const { project_id } = await lokaliseHelper.createProject({ name: projectName });
     const { keys } = await lokaliseHelper.createKey(project_id, { key_name: keyName });
     const translationId = keys.pop().translations.pop().translation_id;
-    
+
     await projectPage.goto(project_id);
-    await page.reload(); // for appearing key in the project
+    await projectPage.waitForKeyIsVisible(keyName);
 
     // Act
     await Promise.all([
@@ -81,14 +80,14 @@ test.describe('Lokalise', () => {
     expect(await projectPage.getPlainTransaltion(translationId)).toEqual(translation);
   });
 
-  test('add translation for plural key', async ({ projectPage, page, baseURL }) => {
+  test('add translation for plural key', async ({ projectPage, page }) => {
     // Arrange
     const { project_id } = await lokaliseHelper.createProject({ name: projectName });
     const { keys } = await lokaliseHelper.createKey(project_id, { key_name: keyName, is_plural: true });
     const translationId = keys.pop().translations.pop().translation_id;
     
     await projectPage.goto(project_id);
-    await page.reload(); // for appearing key in the project
+    await projectPage.waitForKeyIsVisible(keyName);
 
     // Act
     await projectPage.setAllPluralTransaltion(translationId, [translation, otherTranslation]),

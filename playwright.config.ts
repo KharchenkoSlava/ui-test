@@ -15,7 +15,7 @@ const config: PlaywrightTestConfig = {
   use: {
     actionTimeout: 0,
     baseURL: 'https://app.stage.lokalise.cloud',
-    trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
     storageState: 'state.json',
     ignoreHTTPSErrors: true,
     headless: false,
@@ -29,19 +29,19 @@ const config: PlaywrightTestConfig = {
         ...devices['Desktop Chrome'],
       },
     },
-    // {
-    //   name: 'firefox',
-    //   use: {
-    //     ...devices['Desktop Firefox'],
-    //   },
-    // },
+    {
+      name: 'firefox',
+      use: {
+        ...devices['Desktop Firefox'],
+      },
+    },
 
-    // {
-    //   name: 'webkit',
-    //   use: {
-    //     ...devices['Desktop Safari'],
-    //   },
-    // },
+    {
+      name: 'webkit',
+      use: {
+        ...devices['Desktop Safari'],
+      },
+    },
   ],
   outputDir: 'test-results/',
 };

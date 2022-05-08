@@ -71,6 +71,24 @@ export default class LokaliseApi {
       );
   }
 
+  async getProject(projectId: string) {
+    return superAgent
+      .get(`${this.baseURL}/api2/projects/${projectId}`)
+      .timeout({ deadline: 30000 })
+      .set('Content-Type', 'application/json')
+      .set('x-api-token', this.token)
+      .then(
+        (result) => {
+          console.log(`Get project by id ${projectId}: ${JSON.stringify(result)}`);
+          return result;
+        },
+        (error) => {
+          console.warn(JSON.stringify(error));
+          return error;
+        },
+      );
+  }
+
   async createKey(projectId: string, data: ICreateKey = {}) {
     const {
       key_name = faker.random.alpha(10),
