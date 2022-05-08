@@ -8,7 +8,8 @@ test.describe('Lokalise', () => {
   let translation: string;
   let otherTranslation: string;
 
-  test.beforeEach(() => {
+  test.beforeEach(async () => {
+    await lokaliseHelper.deleteAllProjects();
     projectName = faker.random.alpha(10);
     keyName = faker.random.alpha(10);
     translation = faker.random.alpha(10);
