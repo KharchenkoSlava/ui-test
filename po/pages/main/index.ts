@@ -9,7 +9,7 @@ class MainPage extends BasePage {
   constructor(page: Page) {
     super(page);
     this.searchInput = this.page.locator('input[name="q"]');
-    this.searchButton = this.page.locator('input[value="Пошук Google"]').nth(0); 
+    this.searchButton = this.page.locator('input[value="Пошук Google"]').nth(0);
   }
 
   async search(query: string) {

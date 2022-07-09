@@ -8,7 +8,7 @@ export class BasePage {
     this.page = page;
   }
 
-  async goto(query: string = '/') {
-    await this.page.goto(`${config.use.baseURL}${query}`);
+  async goto(query = '/') {
+    await this.page.goto(`${config.use?.baseURL}${query}`);
   }
 }

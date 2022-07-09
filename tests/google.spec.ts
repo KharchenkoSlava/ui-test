@@ -4,7 +4,7 @@ import { log } from '../helpers';
 
 test.describe('Google', () => {
   test('search playwright', async ({ mainPage, searchPage }) => {
-    log.info('INFO, suite 1')
+    log.info('INFO, suite 1');
     // Arrange
     await mainPage.goto();
 
@@ -16,7 +16,7 @@ test.describe('Google', () => {
   });
 
   test('search cypress', async ({ mainPage, searchPage }) => {
-    log.warn('WARN, suite 1')
+    log.warn('WARN, suite 1');
     // Arrange
     await mainPage.goto();
 

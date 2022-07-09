@@ -1,17 +1,16 @@
-import type { PlaywrightTestConfig } from '@playwright/test';
-import { devices } from '@playwright/test';
+import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
   globalSetup: require.resolve('./global-setup'),
   testDir: './tests',
   timeout: 60 * 1000,
   expect: {
-    timeout: 15000
+    timeout: 15000,
   },
   forbidOnly: false,
   retries: 0,
   workers: 1,
-  reporter: [ ['html', { open: 'never' }] ],
+  reporter: [['html', { open: 'never' }]],
   use: {
     actionTimeout: 5000,
     baseURL: 'https://www.google.com',
