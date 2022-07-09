@@ -11,12 +11,11 @@ const config: PlaywrightTestConfig = {
   forbidOnly: false,
   retries: 0,
   workers: 1,
-  reporter: 'html',
+  reporter: [ ['html', { open: 'never' }] ],
   use: {
-    actionTimeout: 0,
-    baseURL: 'https://app.stage.lokalise.cloud',
+    actionTimeout: 5000,
+    baseURL: 'https://www.google.com',
     screenshot: 'only-on-failure',
-    storageState: 'state.json',
     ignoreHTTPSErrors: true,
     headless: false,
   },
@@ -27,19 +26,7 @@ const config: PlaywrightTestConfig = {
       name: 'chromium',
       use: {
         ...devices['Desktop Chrome'],
-      },
-    },
-    {
-      name: 'firefox',
-      use: {
-        ...devices['Desktop Firefox'],
-      },
-    },
-
-    {
-      name: 'webkit',
-      use: {
-        ...devices['Desktop Safari'],
+        viewport: { width: 1280, height: 720 },
       },
     },
   ],

@@ -1,5 +1,2 @@
-export const USER = {
-  email: 'slava.charodey@gmail.com',
-  password: 'password',
-}
-
+export const searchQuery = { playwright: 'playwright', cypress: 'cypress' };
+export const searchQueryLink = { playwright: 'https://playwright.dev/', cypress: 'https://playwright.dev/' };
