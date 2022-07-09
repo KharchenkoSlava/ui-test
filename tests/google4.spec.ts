@@ -1,6 +1,6 @@
-import { test } from '../fixtures';
-import { searchQuery, searchQueryLink } from '../data';
-import { log } from '../helpers';
+import { test } from 'fixtures';
+import { searchQuery, searchQueryLink } from 'data';
+import { log } from 'helpers';
 
 test.describe('Google4', () => {
   test('search playwright', async ({ mainPage, searchPage }) => {

@@ -1,6 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test';
 import { BasePage } from '../base.page';
-import { decoratePage } from '../../../helpers';
+import { decoratePage } from 'helpers';
 
 class SearchPage extends BasePage {
   private readonly firstResult: Locator;

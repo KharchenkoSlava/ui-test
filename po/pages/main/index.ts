@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { BasePage } from '../base.page';
-import { decoratePage } from '../../../helpers';
+import { decoratePage } from 'helpers';
 
 class MainPage extends BasePage {
   private readonly searchInput: Locator;

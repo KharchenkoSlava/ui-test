@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig = {
   },
   forbidOnly: false,
   retries: 0,
-  workers: 1,
+  workers: 4,
   reporter: [['html', { open: 'never' }]],
   use: {
     actionTimeout: 5000,

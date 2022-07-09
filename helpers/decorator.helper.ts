@@ -1,4 +1,4 @@
-import { log } from '../helpers';
+import { log } from 'helpers';
 
 export function decoratePage(initialClass: any) {
   const { name } = initialClass;
