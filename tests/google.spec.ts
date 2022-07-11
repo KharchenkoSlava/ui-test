@@ -1,28 +1,30 @@
+import { email } from 'data';
 import { test, expect } from 'fixtures';
-import { searchQuery, searchQueryLink } from 'data';
+import { sleep } from 'helpers';
 
-test.describe('Google', () => {
-  test('search playwright', async ({ mainPage, searchPage }) => {
+test.describe('First test', () => {
+  test('search playwright', async ({ notConfirmedAlarmsPage, logInPage }) => {
     // Arrange
-    await mainPage.goto();
-    const textLanguage = await mainPage.getSwitchLanguageTextBlock();
-    expect(textLanguage).toEqual('Мова Google: русский English');
+    await logInPage.goto();
+    await logInPage.signIn(email.viacheslavKharchenko);
+
+    await expect(notConfirmedAlarmsPage.title).toBeVisible();
+
+    await notConfirmedAlarmsPage.goto();
 
     // Act
-    await mainPage.searchFragment.search(searchQuery.playwright);
+    await sleep(20000);
 
     // Assert
-    await searchPage.checkFirstResultLink(searchQueryLink.playwright);
   });
 
-  test('search cypress', async ({ mainPage, searchPage }) => {
-    // Arrange
-    await mainPage.goto();
+  // test('search cypress', async ({ notConfirmedAlarmsPage }) => {
+  //   // Arrange
+  //   await notConfirmedAlarmsPage.goto();
 
-    // Act
-    await mainPage.searchFragment.search(searchQuery.cypress);
+  //   // Act
+  //   await sleep(20000);
 
-    // Assert
-    await searchPage.checkFirstResultLink(searchQueryLink.cypress);
-  });
+  //   // Assert
+  // });
 });

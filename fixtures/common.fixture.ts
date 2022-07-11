@@ -1,12 +1,12 @@
 import { expect, test as baseTest } from '@playwright/test';
-import { MainPage, SearchPage } from 'po';
+import { LoginPage, NotConfirmedAlarmsPage } from 'po';
 
-const test = baseTest.extend<{ mainPage: MainPage; searchPage: SearchPage }>({
-  mainPage: async ({ page }, use) => {
-    await use(new MainPage(page));
+const test = baseTest.extend<{ logInPage: LoginPage; notConfirmedAlarmsPage: NotConfirmedAlarmsPage }>({
+  logInPage: async ({ page }, use) => {
+    await use(new LoginPage(page));
   },
-  searchPage: async ({ page }, use) => {
-    await use(new SearchPage(page));
+  notConfirmedAlarmsPage: async ({ page }, use) => {
+    await use(new NotConfirmedAlarmsPage(page));
   },
 });
 

@@ -27,7 +27,7 @@ function getEnv(env = process.env.ENV) {
 function getBaseUrl(env = process.env.ENV) {
   switch (env) {
     case 'dev':
-      return 'https://jaime-dev.jera-stg.com/';
+      return 'https://jaime-dev.jera-stg.com';
     default:
       throw new Error(`BaseUrl is unspecified for env: ${env}!`);
   }

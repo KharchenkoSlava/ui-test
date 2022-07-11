@@ -10,14 +10,15 @@ const config: PlaywrightTestConfig = {
   },
   forbidOnly: false,
   retries: 0,
-  workers: 3,
+  workers: 1,
   reporter: [['html', { open: 'never' }]],
   use: {
-    actionTimeout: 15000,
+    actionTimeout: 60000,
     baseURL: params.baseUrl,
     screenshot: 'only-on-failure',
     ignoreHTTPSErrors: true,
-    headless: true,
+    headless: false,
+    // storageState: 'state.json',
   },
 
   /* Configure projects for major browsers */
