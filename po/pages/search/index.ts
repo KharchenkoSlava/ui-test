@@ -4,16 +4,15 @@ import { decoratePage } from 'helpers';
 
 class SearchPage extends BasePage {
   private readonly firstResult: Locator;
-  private readonly searchButton: Locator;
 
   constructor(page: Page) {
     super(page);
-    this.firstResult = this.page.locator('#rso > div').nth(0);
+    this.firstResult = this.page.locator('#rso > div:nth-child(1)');
   }
 
-  async checkFirstResultLink(expectedLink: string) {
-    const actualLink = await this.firstResult.locator('link').getAttribute('href');
-    expect(actualLink, 'Wrong search result').toBe(expectedLink);
+  checkFirstResultLink(expectedLink: string) {
+    const cite = this.firstResult.locator('cite').nth(0);
+    expect(cite, 'Wrong search result').toContainText(expectedLink);
   }
 }
 
