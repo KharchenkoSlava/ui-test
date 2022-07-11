@@ -1,3 +1,4 @@
+import { params } from './config/config';
 import { PlaywrightTestConfig, devices } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
@@ -12,8 +13,8 @@ const config: PlaywrightTestConfig = {
   workers: 3,
   reporter: [['html', { open: 'never' }]],
   use: {
-    actionTimeout: 30000,
-    baseURL: 'https://www.google.com',
+    actionTimeout: 15000,
+    baseURL: params.baseUrl,
     screenshot: 'only-on-failure',
     ignoreHTTPSErrors: true,
     headless: true,
