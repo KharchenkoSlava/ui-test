@@ -1,24 +1,23 @@
 import { Locator, Page } from '@playwright/test';
-import { BasePage } from '../base.page';
 import { decoratePage } from 'helpers';
+import { BasePage } from '../base.page';
+import { SearchFragment } from './fragments/search';
 
 class MainPage extends BasePage {
-  private readonly searchInput: Locator;
-  private readonly searchButton: Locator;
+  private readonly switchLanguageTextBlock: Locator;
+  readonly searchFragment: SearchFragment;
 
   constructor(page: Page) {
     super(page);
-    this.searchInput = this.page.locator('input[name="q"]');
-    this.searchButton = this.page.locator('input[value="Пошук Google"]').nth(0);
+    this.switchLanguageTextBlock = this.page.locator('#gws-output-pages-elements-homepage_additional_languages__als');
+    this.searchFragment = new SearchFragment(page);
   }
 
-  async search(query: string) {
-    await this.searchInput.fill(query);
-    await this.searchButton.click();
-    await this.page.waitForNavigation({ url: '**/search?**' });
+  async getSwitchLanguageTextBlock() {
+    const text = await this.switchLanguageTextBlock.innerText();
+    return text;
   }
 }
 
 decoratePage(MainPage);
-
 export { MainPage };

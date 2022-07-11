@@ -9,14 +9,14 @@ const config: PlaywrightTestConfig = {
   },
   forbidOnly: false,
   retries: 0,
-  workers: 4,
+  workers: 3,
   reporter: [['html', { open: 'never' }]],
   use: {
-    actionTimeout: 5000,
+    actionTimeout: 30000,
     baseURL: 'https://www.google.com',
     screenshot: 'only-on-failure',
     ignoreHTTPSErrors: true,
-    headless: false,
+    headless: true,
   },
 
   /* Configure projects for major browsers */
